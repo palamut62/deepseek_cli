@@ -122,6 +122,99 @@ deepseek_cli/
 
 ---
 
+## 🧭 Kullanım Akışı (Arayüz)
+
+Aşağıdaki adımlar CLI arayüzünde kullanıcıya gösterilir:
+
+1. **Özellik Seçimi**
+   - Kullanıcıdan bir özellik/fonksiyon seçmesi istenir:
+     ```
+     Lütfen bir özellik seçin:
+     1 - auth
+     2 - api
+     3 - db
+     4 - ui
+     5 - test
+     6 - ci
+     7 - cache
+     8 - logging
+     9 - config
+     10 - utils
+     11 - other
+     Seçiminiz (numara veya isim): _
+     ```
+   - Hiçbir seçim yapılmazsa veya yanlış seçim yapılırsa:
+     ```
+     [bold red]Hiçbir özellik seçilmedi! Çıkılıyor...
+     veya
+     [bold red]Geçersiz seçim: ...
+     ```
+
+2. **Prompt Girişi**
+   - Seçilen özellik için kullanıcıdan açıklama istenir:
+     ```
+     Lütfen bu özellik için ne yapılacağını yazın: _
+     ```
+   - Boş bırakılırsa:
+     ```
+     [bold red]Prompt girilmedi! Çıkılıyor...
+     ```
+
+3. **Plan Oluşturma ve Onay**
+   - Eğer `--plan` seçiliyse, plan oluşturulup gösterilir:
+     ```
+     📝 Plan oluşturuluyor...
+     1. ...
+     2. ...
+     ...
+     Devam edilsin mi? (e/h): _
+     ```
+   - Kullanıcı "h" derse:
+     ```
+     [bold red]İşlem iptal edildi.
+     ```
+
+4. **Kod ve TODO Üretimi**
+   - Plan onaylanırsa veya plan yoksa, TODO ve kod üretimi başlar.
+   - Kod üretimi sonrası kaydetme sorusu:
+     ```
+     Kodu dosyaya kaydetmek ister misiniz? [e]vet / [h]ayır / [a]lways
+     ```
+
+---
+
+## ⚡ Kısaca Kullanım
+
+1. Komutu başlatın:
+   ```bash
+   python -m deepseek_cli.cli
+   ```
+2. Özellik seçin (menüden numara veya isim girin):
+   ```
+   Lütfen bir özellik seçin:
+   1 - auth
+   2 - api
+   ...
+   Seçiminiz (numara veya isim): 2
+   # veya: api
+   ```
+3. Seçilen özellik için ne yapılacağını yazın:
+   ```
+   Lütfen bu özellik için ne yapılacağını yazın: JWT tabanlı kimlik doğrulama ekle
+   ```
+4. (Varsa) Planı inceleyin ve devam etmek için onay verin:
+   ```
+   📝 Plan oluşturuluyor...
+   1. ...
+   Devam edilsin mi? (e/h): e
+   ```
+5. Kod ve TODO otomatik üretilir. Son olarak kaydetmek isteyip istemediğiniz sorulur:
+   ```
+   Kodu dosyaya kaydetmek ister misiniz? [e]vet / [h]ayır / [a]lways
+   ```
+
+---
+
 ## ✨ Genişletme Önerileri
 - [ ] Web arayüzü (Streamlit)
 - [ ] GitHub Issue & PR entegrasyonu

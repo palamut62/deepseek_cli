@@ -61,10 +61,9 @@ def print_banner() -> None:
 
 
 def print_tips() -> None:
-    console.print("\n[bold]Tips for getting started:[/bold]")
-    console.print(" 1. Ask questions, generate code, or run commands.")
-    console.print(" 2. Be specific for the best results.")
-    console.print(" 3. Type :help for more information.\n")
+    console.print("[bold cyan]DeepSeek CLI – Claude Code & Gemini CLI benzeri deneyim[/bold cyan]")
+    console.print("[bold]Akış:[/bold] özellik seç → istek yaz → (plan? y/n) → kod & TODO → kaydet? [y/n/a]")
+    console.print("[bold]Komutlar:[/bold] :help  :quit / :q  exit  :features")
 
 
 CONFIG_PATH = Path.home() / ".deepseek_cli_config.json"
@@ -124,20 +123,7 @@ def main_loop() -> None:
 
     ensure_api_key()
 
-    console.print("[bold green]Features:")
-    console.print("""
-• Natural language prompt → Code generation
-• Plan mode               → Task breakdown
-• Code review             → Detect issues & improvements
-• Code fix                → Apply automatic fixes
-• File save               → Interactive or automatic
-
-Commands:
-  :help       → show this help message
-  :features   → list available features
-  :quit / :q  → exit the session
-  exit        → exit the session
-""")
+    console.print("[bold green]Komutlar:[/bold green] :help  :quit / :q  exit")
 
     while True:
         try:
@@ -161,14 +147,7 @@ Commands:
 """)
             continue
         if stripped == ":features":
-            console.print("""
-Features:
-  • Natural language prompt → Code generation
-  • Plan mode               → Task breakdown
-  • Code review             → Detect issues & improvements
-  • Code fix                → Apply automatic fixes
-  • File save               → Interactive or automatic
-""")
+            console.print("Mevcut özellikler: kod üretimi, plan, review, fix, dosya kaydetme.")
             continue
 
         plan = Confirm.ask("Generate plan output?", default=False)

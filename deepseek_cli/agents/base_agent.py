@@ -47,21 +47,24 @@ class BaseAgent(abc.ABC):
 
     def _chat(self, messages: List[Dict[str, str]]) -> str:
         """Call DeepSeek model via OpenAI-compatible API, handling both client versions."""
-        if _HAS_NEW_CLIENT:
-            response = _client.chat.completions.create(
+        try:
+            if _HAS_NEW_CLIENT:
+                response = _client.chat.completions.create(
+                    model=config.DEEPSEEK_MODEL,
+                    messages=messages,
+                    temperature=0.2,
+                )
+                return response.choices[0].message.content.strip()
+
+            # legacy path
+            response = openai.ChatCompletion.create(
                 model=config.DEEPSEEK_MODEL,
                 messages=messages,
                 temperature=0.2,
             )
             return response.choices[0].message.content.strip()
-
-        # legacy path
-        response = openai.ChatCompletion.create(
-            model=config.DEEPSEEK_MODEL,
-            messages=messages,
-            temperature=0.2,
-        )
-        return response.choices[0].message.content.strip()
+        except openai.OpenAIError as e:
+            raise RuntimeError(f"API çağrısı başarısız: {str(e)}") from e
 
     def run(self, *args: Any, **kwargs: Any) -> str:
         """High-level method executed by the crew runner."""
